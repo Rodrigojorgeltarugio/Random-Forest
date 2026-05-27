@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Resultado</title>
+    <style>body{font-family:Arial,sans-serif;margin:2em}</style>
+  </head>
+  <body>
+    <h2>Resultados</h2>
+    {% if msg %}
+      <p>{{ msg }}</p>
+    {% endif %}
+    {% if rows %}
+      <table border="1" cellspacing="0" cellpadding="6" style="margin-bottom:1em;border-collapse:collapse;">
+        <thead>
+          <tr>
+            <th>Arquivo</th>
+            <th>Predição</th>
+            <th>Estado</th>
+            <th>Probabilidade</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in rows %}
+            <tr>
+              <td>{{ row.filename }}</td>
+              <td>{{ row.prediction }}</td>
+              <td><strong>{{ row.movement }}</strong></td>
+              <td>{{ row.probability if row.probability is not none else '' }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+    <ul>
+      {% for link in links %}
+        <li><a href="{{ link }}">Download: {{ link.split('/')[-1] }}</a></li>
+      {% endfor %}
+    </ul>
+    <p><a href="/">Voltar</a></p>
+  </body>
+</html>
+
+# python snippet — rode com a venv do projeto
+from utils import load_file_as_array, extract_features_from_array
+import numpy as np, os, joblib, pandas as pd
+
+path = r"c:\\Users\\rodri\\Downloads\\acelerometro_corrida_100k.csv"
+arr = load_file_as_array(path)
+assert arr is not None, "Arquivo não pôde ser lido como dados numéricos (verifique colunas x,y,z ou primeiras 3 colunas numéricas)."
+
+feats = extract_features_from_array(arr)
+X = np.array([list(feats.values())])
+
+# carregar último modelo em ./outputs
+mods = [f for f in os.listdir('outputs') if f.endswith('.joblib')]
+if not mods:
+    raise SystemExit('Nenhum modelo .joblib em outputs — treine ou faça upload de um modelo primeiro.')
+latest = max(mods, key=lambda n: os.path.getmtime(os.path.join('outputs', n)))
+model_obj = joblib.load(os.path.join('outputs', latest))
+clf = model_obj['model']
+
+pred = clf.predict(X)[0]
+probs = clf.predict_proba(X)[0] if hasattr(clf, 'predict_proba') else None
+
+print('prediction (raw):', pred)
+if probs is not None:
+    # prob da classe prevista
+    idx = list(clf.classes_).index(pred)
+    print('probability:', probs[idx])

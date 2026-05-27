@@ -1,0 +1,2 @@
+a0_mean,a0_std,a0_min,a0_max,a0_median,a0_iqr,a0_rms,a0_skew,a0_kurtosis,a0_energy,a0_dom_freq,a1_mean,a1_std,a1_min,a1_max,a1_median,a1_iqr,a1_rms,a1_skew,a1_kurtosis,a1_energy,a1_dom_freq,a2_mean,a2_std,a2_min,a2_max,a2_median,a2_iqr,a2_rms,a2_skew,a2_kurtosis,a2_energy,a2_dom_freq,filename
+2.5,1.5,1.0,4.0,2.5,1.5,2.9154759474226504,0.0,-2.0,17.0,1.0,3.5,1.5,2.0,5.0,3.5,1.5,3.8078865529319543,0.0,-2.0,29.0,1.0,4.5,1.5,3.0,6.0,4.5,1.5,4.743416490252569,0.0,-2.0,45.0,1.0,a_sample.csv

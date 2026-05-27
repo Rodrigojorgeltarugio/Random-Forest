@@ -1,0 +1,2 @@
+filename,prediction,movement,probability
+acelerometro_corrida_100k.csv,running,correndo,1.0

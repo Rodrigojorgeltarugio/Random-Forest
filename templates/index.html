@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Accelerometer Processing</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 2em; }
+      .box { border: 1px solid #ddd; padding: 1em; border-radius: 6px; }
+    </style>
+  </head>
+  <body>
+    <h1>Processamento Automático de Acelerômetro</h1>
+    <div class="box">
+      <form method="post" action="/process" enctype="multipart/form-data">
+        <div>
+          <label>Arquivos (múltiplos):</label><br/>
+          <input type="file" name="files" multiple />
+        </div>
+        <div style="margin-top:8px;">
+          <label>Tarefa:</label><br/>
+          <select name="task">
+            <option value="extract">Extrair features</option>
+            <option value="train">Treinar modelo (Random Forest)</option>
+            <option value="predict">Prever</option>
+          </select>
+        </div>
+        <div style="margin-top:8px;">
+          <label>Arquivo de modelo (opcional para Prever):</label><br/>
+          <input type="file" name="model" />
+        </div>
+        <div style="margin-top:12px;">
+          <button type="submit">Enviar</button>
+        </div>
+      </form>
+    </div>
+    <p style="margin-top:1em; color:#666">Suporta CSV, JSON, NPY, XLSX e ZIP (contendo arquivos suportados). Para treinar, envie arquivos rotulados (ex.: nome "label_filename.csv" ou CSV com coluna 'label').</p>
+  </body>
+</html>
